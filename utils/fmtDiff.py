@@ -8,8 +8,6 @@ import difflib
 import commands
 from jinja2 import Template
 
-from .models import MarkedDiff
-
 
 def get_diff_output(filename1, filename2):
     cmd = u'diff -u {0:s} {1:s}'.format(filename1, filename2)
@@ -255,11 +253,8 @@ def process_files_diff(filename1, filename2):
         'html_result1': html_result1,
         'html_result2': html_result2
     }
-
-    record = MarkedDiff()
-    record.save(data)
     
-    return record
+    return data
     
     
 if __name__ == '__main__':

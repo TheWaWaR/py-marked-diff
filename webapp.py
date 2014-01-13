@@ -25,11 +25,11 @@ db.app = app
 
 @app.route('/')
 def index():
-    rid = request.args.get('rid', None)
-    if rid is None:
+    uuid = request.args.get('uuid', None)
+    record = MarkedDiff.query.filter_by(uuid=uuid).first()
+    if record is None:
         return redirect(url_for('.upload'))
         
-    record = MarkedDiff.query.get_or_404(rid)
     lines1, lines2 = parse_diff_result(record.result1), parse_diff_result(record.result2)
     return render_template('main.html',
                            fn1=record.filename1,
@@ -49,7 +49,8 @@ def upload():
         fn2 = file2.filename.encode('utf-8')
         prefix = uuid.uuid1().hex
         if fn1 == fn2:
-            fn2 = '1.%s' % fn2
+            fn1 = '1.%s' % fn1
+            fn2 = '2.%s' % fn2
         fn1 = '%s--%s' % (prefix, fn1)
         fn2 = '%s--%s' % (prefix, fn2)
         filepath1 = os.path.join(UPLOAD_PATH, fn1)
@@ -57,8 +58,11 @@ def upload():
         file1.save(filepath1)
         file2.save(filepath2)
         
-        record = process_files_diff(filepath1, filepath2)
-        return redirect(url_for('.index', rid=record.id))
+        data = process_files_diff(filepath1, filepath2)
+        data['uuid'] = prefix
+        record = MarkedDiff()
+        record.save(data)
+        return redirect(url_for('.index', uuid=record.uuid))
     else:
         return render_template('upload-form.html')
 

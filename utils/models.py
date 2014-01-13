@@ -7,6 +7,7 @@ class MarkedDiff(db.Model):
     __tablename__ = 'marked_diffs'
     
     id           = db.Column(db.Integer, primary_key=True)
+    uuid         = db.Column(db.String(32))
     filename1    = db.Column(db.String(100))
     filename2    = db.Column(db.String(100))
     result1      = db.Column(db.Text)
