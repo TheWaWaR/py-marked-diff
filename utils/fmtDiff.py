@@ -1,8 +1,6 @@
 #!/usr/bin/env python2
 #coding: utf-8
 
-from __future__ import absolute_import
-
 import sys
 import re
 import cgi
@@ -10,10 +8,7 @@ import difflib
 import commands
 from jinja2 import Template
 
-from proj import db, config
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
+from .models import MarkedDiff
 
 
 def get_diff_output(filename1, filename2):
@@ -251,15 +246,20 @@ def process_files_diff(filename1, filename2):
     result2 = '\n'.join(rets2)
     html_result1 = render_html('file1', result1) if header is not None else render_empty_html('file1', result1)
     html_result2 = render_html('file2', result2) if header is not None else render_empty_html('file2', result2)
-    record = (filename1, filename2, result1, result2, html_result1, html_result2)
+
+    data = {
+        'filename1': filename1,
+        'filename2': filename2,
+        'result1': result1,
+        'result2': result2,
+        'html_result1': html_result1,
+        'html_result2': html_result2
+    }
+
+    record = MarkedDiff()
+    record.save(data)
     
-    db_cli = db.MySqlClient(config.MYSQL_CONN)
-    db_cli.connect()
-    db_cli.create_table()
-    rid = db_cli.save_record(record)
-    db_cli.close()
-    
-    return rid
+    return record
     
     
 if __name__ == '__main__':

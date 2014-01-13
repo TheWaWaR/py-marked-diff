@@ -1,0 +1,19 @@
+
+* py-marked-diff
+  Mark diff output (as HTML)
+
+* Demo
+  doing......
+
+* 如何运行本项目
+
+#+BEGIN_SRC
+git clone https://github.com/TheWaWaR/py-marked-diff.git
+cd py-marked-diff
+pip install flask_sqlalchemy
+python webapp create_db
+python webapp
+#+END_SRC  
+
+
+* 如何复用本项目的代码  
