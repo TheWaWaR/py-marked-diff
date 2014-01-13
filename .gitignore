@@ -13,4 +13,4 @@ etc/nginx-part.conf
 etc/settings.py
 
 venv/*
-static/uploads/*
+uploads/*

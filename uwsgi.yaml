@@ -1,0 +1,12 @@
+uwsgi: 
+  pythonpath   : /home/weet/Github/py-marked-diff
+  socket       : /tmp/uwsgi-diff.sock
+  chmod-socket : 666
+  callable     : app
+  master       : true
+  module       : webapp
+  workers      : 8
+  threads      : 10
+  idle         : 1800
+  logto        : /home/weet/Github/py-marked-diff/logs/uwsgi.log
+  static-map   : /static=/home/weet/Github/py-marked-diff/static
