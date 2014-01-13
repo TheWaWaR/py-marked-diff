@@ -1,11 +1,10 @@
-
 * 使用场景描述
   1. 在线比较两个文本文件
   2. 提供一种能保留尽可能多信息的diff输出的中间格式
 
 
 * Demo
-  http://diff.ahorn.me/
+  http://diff.ahorn.me/?uuid=ffcedcca7c3211e3ac12f23c9169c576
 
   
 * 如何运行本项目
