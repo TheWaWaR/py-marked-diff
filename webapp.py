@@ -32,12 +32,8 @@ def index():
         
     lines1, lines2 = parse_diff_result(record.result1), parse_diff_result(record.result2)
     return render_template('main.html',
-                           filename1=record.filename1,
-                           filename2=record.filename2,
-                           html_res1=record.html_result1,
-                           html_res2=record.html_result2,
-                           lines1=lines1, lines2=lines2,
-                           dt=record.created_at)
+                           record=record,
+                           lines1=lines1, lines2=lines2)
 
     
 @app.route('/upload', methods=['GET', 'POST'])

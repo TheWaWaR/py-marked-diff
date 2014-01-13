@@ -1,10 +1,13 @@
 
-* py-marked-diff
-  Mark diff output (as HTML)
+* 使用场景描述
+  1. 在线比较两个文本文件
+  2. 提供一种能保留尽可能多信息的diff输出的中间格式
+
 
 * Demo
-  doing......
+  http://diff.ahorn.me/
 
+  
 * 如何运行本项目
 
 #+BEGIN_SRC
@@ -13,7 +16,19 @@ cd py-marked-diff
 pip install flask_sqlalchemy
 python webapp create_db
 python webapp
-#+END_SRC  
+#+END_SRC
+  
 
+* 格式输出格式说明
+#+BEGIN_SRC
+{行类型}:  [+, #,  !=, ==]
+ +     ==> 当前文件有内容, 对应的文件补充虚拟行
+ #     ==> 每一个 '+' 都对应一个 '#', 代表一个虚拟行, 实际文件中并不存在该行, 所以不应该显示行号
+ !=    ==> 两个文件内容不一致但是在比较时可以对齐的行
+ ==    ==> 两个文件内容完全一致的行(行号不一定一样)
+
+{输出行的格式}:  u'{0:<2s}:{1:d}:{2:s}'.format(type, lineNumber, content)
+#+END_SRC
+  
 
 * 如何复用本项目的代码  

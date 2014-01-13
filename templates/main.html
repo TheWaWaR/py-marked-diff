@@ -10,11 +10,12 @@
         margin-bottom: 20px;
       }
       .diff-part {
-      margin: 5px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #EEE;
-      float: left; width: 600px;
+        margin: 5px;
+        padding: 10px;
+        border-radius: 8px;
+        background: #EEE;
+        float: left; width: 600px;
+        overflow-x: scroll;
       }
       
       .line-number { background: #444; color: #EFEFEF; }
@@ -39,14 +40,14 @@
 
       <h2>自定义HTML模板</h2>
       <div id="">
-        <div id="file1" class="diff-part">
-          <h3>{{ filename1 }}</h3>
+        <div class="diff-part file1">
+          <h3>{{ record.filename1 }}</h3>
           <hr />
 
           {{ render_diff_part(lines1) }}
         </div>
-        <div id="file2" class="diff-part">
-          <h3>{{ filename2 }}</h3>
+        <div class="diff-part file2">
+          <h3>{{ record.filename2 }}</h3>
           <hr />
 
           {{ render_diff_part(lines2) }}
@@ -57,9 +58,18 @@
       <hr />
       <h2>默认的HTML模板</h2> 
       <div id="">
-        {{ html_res1 | safe }}
-        {{ html_res2 | safe }}
+        {{ record.html_result1 | safe }}
+        {{ record.html_result2 | safe }}
         <div class="cleaner"> </div>
+      </div>
+
+      <hr />
+      <h2>中间格式</h2>
+      <div class="diff-part file1">
+        <pre>{{ record.result1 }}</pre>
+      </div>
+      <div class="diff-part file2">
+        <pre>{{ record.result2 }}</pre>
       </div>
       
     </div>
