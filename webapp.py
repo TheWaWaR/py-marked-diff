@@ -6,6 +6,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 import os
+import uuid
 from flask import (Flask, request, redirect, render_template,
                    url_for, send_file, abort)
 from utils.fmtDiff import parse_diff_result, process_files_diff
@@ -46,6 +47,11 @@ def upload():
         file2 = request.files['file2']
         fn1 = file1.filename.encode('utf-8')
         fn2 = file2.filename.encode('utf-8')
+        prefix = uuid.uuid1().hex
+        if fn1 == fn2:
+            fn2 = '1.%s' % fn2
+        fn1 = '%s--%s' % (prefix, fn1)
+        fn2 = '%s--%s' % (prefix, fn2)
         filepath1 = os.path.join(UPLOAD_PATH, fn1)
         filepath2 = os.path.join(UPLOAD_PATH, fn2)
         file1.save(filepath1)
