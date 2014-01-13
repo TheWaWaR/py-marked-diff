@@ -1,0 +1,25 @@
+{% macro render_diff_part(lines) %}
+      {% for line in lines %}
+        {% if line is none %}
+            <div class="part-spliter">[ ...... ]</div>
+        {% elif line[0] == '+ ' %}
+            <div class="add-line">
+              <span class="line-number">{{ line[1] }}:</span>
+              <span class="content">{{ line[2] | safe }}</span>
+            </div>
+        {% elif line[0] == '# ' %}
+            <div class="virtual-line">&nbsp;</div>
+        {% elif line[0] == '!=' %}
+            <div class="diff-line">
+              <span class="line-number">{{ line[1] }}:</span>
+              <span class="content">{{ line[2] | safe }}</span>
+            </div>
+        {% else %}
+            <div class="equal-line">
+              <span class="line-number">{{ line[1] }}:</span>
+              <span class="content">{{ line[2] | safe }}</span>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+                

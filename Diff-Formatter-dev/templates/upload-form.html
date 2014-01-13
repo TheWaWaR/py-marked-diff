@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      #upload-form { margin:160px auto 0; width:240px; }
+      .file-input { margin-bottom: 15px; }
+      #submit { float: right; }
+    </style>
+  </head>
+  <body>
+    <div id="upload-form" >
+      <form method="POST" id="upload" enctype="multipart/form-data" action="/upload">
+        <div class="file-input">
+          <input type="file" name="file1" value="File 1" />
+        </div>
+        <div class="file-input">
+          <input type="file" name="file2" value="File 2" />
+        </div>
+        <div id="submit">
+          <input type="submit" name="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
