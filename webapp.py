@@ -32,8 +32,8 @@ def index():
         
     lines1, lines2 = parse_diff_result(record.result1), parse_diff_result(record.result2)
     return render_template('main.html',
-                           fn1=record.filename1,
-                           fn2=record.filename2,
+                           filename1=record.filename1,
+                           filename2=record.filename2,
                            html_res1=record.html_result1,
                            html_res2=record.html_result2,
                            lines1=lines1, lines2=lines2,
@@ -51,14 +51,14 @@ def upload():
         if fn1 == fn2:
             fn1 = '1.%s' % fn1
             fn2 = '2.%s' % fn2
-        fn1 = '%s--%s' % (prefix, fn1)
-        fn2 = '%s--%s' % (prefix, fn2)
-        filepath1 = os.path.join(UPLOAD_PATH, fn1)
-        filepath2 = os.path.join(UPLOAD_PATH, fn2)
+        filepath1 = os.path.join(UPLOAD_PATH, '%s--%s' % (prefix, fn1))
+        filepath2 = os.path.join(UPLOAD_PATH, '%s--%s' % (prefix, fn2))
         file1.save(filepath1)
         file2.save(filepath2)
         
         data = process_files_diff(filepath1, filepath2)
+        data['filename1'] = fn1
+        data['filename2'] = fn2
         data['uuid'] = prefix
         record = MarkedDiff()
         record.save(data)

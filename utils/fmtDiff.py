@@ -9,8 +9,8 @@ import commands
 from jinja2 import Template
 
 
-def get_diff_output(filename1, filename2):
-    cmd = u'diff -u {0:s} {1:s}'.format(filename1, filename2)
+def get_diff_output(filepath1, filepath2):
+    cmd = u'diff -u {0:s} {1:s}'.format(filepath1, filepath2)
     diff_out = commands.getstatusoutput(cmd)
     # print cmd, '<|>' ,diff_out
     return diff_out
@@ -225,8 +225,8 @@ def render_empty_html(divid, result):
     return _html % divid
     
 
-def process_files_diff(filename1, filename2):
-    diff_out = get_diff_output(filename1, filename2)
+def process_files_diff(filepath1, filepath2):
+    diff_out = get_diff_output(filepath1, filepath2)
     diff_lines = diff_out[1].split('\n')
 
     rets1, rets2 = [], []
@@ -246,8 +246,6 @@ def process_files_diff(filename1, filename2):
     html_result2 = render_html('file2', result2) if header is not None else render_empty_html('file2', result2)
 
     data = {
-        'filename1': filename1,
-        'filename2': filename2,
         'result1': result1,
         'result2': result2,
         'html_result1': html_result1,

@@ -4,7 +4,11 @@
       body { margin:0; padding:0; background: #FFF; font-size: 13px; }
       div { margin:0; }
       .cleaner { clear: both; }
-      #main { padding: 10px; width: 1280px; }
+      #main {
+        padding: 10px;
+        width: 1280px;
+        margin-bottom: 20px;
+      }
       .diff-part {
       margin: 5px;
       padding: 10px;
@@ -28,28 +32,37 @@
   <body>
     <div id="main">
       <div id="actions">
-        <button type="button" onclick="window.location.href='/upload'">Upload</button>
+        <button type="button" onclick="window.location.href='/upload'">Upload new</button>
       </div>
+    
       {% from "diff-part.html" import render_diff_part %}
+
+      <h2>自定义HTML模板</h2>
+      <div id="">
+        <div id="file1" class="diff-part">
+          <h3>{{ filename1 }}</h3>
+          <hr />
+
+          {{ render_diff_part(lines1) }}
+        </div>
+        <div id="file2" class="diff-part">
+          <h3>{{ filename2 }}</h3>
+          <hr />
+
+          {{ render_diff_part(lines2) }}
+        </div>
+        <div class="cleaner"> </div>
+      </div>
+
+      <hr />
+      <h2>默认的HTML模板</h2> 
       <div id="">
         {{ html_res1 | safe }}
         {{ html_res2 | safe }}
         <div class="cleaner"> </div>
       </div>
       
-      {###
-      <hr />
-      <div id="">
-        <div id="file1" class="diff-part">
-          {{ render_diff_part(lines1) }}
-        </div>
-        <div id="file2" class="diff-part">
-          {{ render_diff_part(lines2) }}
-        </div>
-        <div class="cleaner"> </div>
-      </div>
-      ###}
-      
     </div>
+    
   </body>
 </html>
