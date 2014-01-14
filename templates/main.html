@@ -26,7 +26,7 @@
       .diff-line .content { background: #FF8040; }
       
       .add { background: green;}
-      .cut { background: red;}
+      .remove { background: red;}
       .diff { background: #E32;}
     </style>
   </head>
@@ -36,7 +36,7 @@
         <button type="button" onclick="window.location.href='/upload'">Upload new</button>
       </div>
     
-      {% from "diff-part.html" import render_diff_part %}
+      {% from "diff-part.html" import render_diff_blocks %}
 
       <h2>自定义HTML模板</h2>
       <div id="">
@@ -44,32 +44,24 @@
           <h3>{{ record.filename1 }}</h3>
           <hr />
 
-          {{ render_diff_part(lines1) }}
+          {{ render_diff_blocks(blocks1) }}
         </div>
         <div class="diff-part file2">
           <h3>{{ record.filename2 }}</h3>
           <hr />
 
-          {{ render_diff_part(lines2) }}
+          {{ render_diff_blocks(blocks2) }}
         </div>
         <div class="cleaner"> </div>
       </div>
 
       <hr />
-      <h2>默认的HTML模板</h2> 
-      <div id="">
-        {{ record.html_result1 | safe }}
-        {{ record.html_result2 | safe }}
-        <div class="cleaner"> </div>
-      </div>
-
-      <hr />
-      <h2>中间格式</h2>
+      <h2>JSON 格式的中间数据</h2>
       <div class="diff-part file1">
-        <pre>{{ record.result1 }}</pre>
+        <pre>{{ data1 }}</pre>
       </div>
       <div class="diff-part file2">
-        <pre>{{ record.result2 }}</pre>
+        <pre>{{ data2 }}</pre>
       </div>
       
     </div>

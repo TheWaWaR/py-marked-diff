@@ -7,9 +7,11 @@ sys.setdefaultencoding('utf-8')
 
 import os
 import uuid
+import json
+
 from flask import (Flask, request, redirect, render_template,
                    url_for, send_file, abort)
-from utils.fmtDiff import parse_diff_result, process_files_diff
+from utils.diff_formatter import parse_diff_blocks, process_files_diff
 from utils.gvars import db
 from utils.models import MarkedDiff
 
@@ -29,11 +31,23 @@ def index():
     record = MarkedDiff.query.filter_by(uuid=uuid).first()
     if record is None:
         return redirect(url_for('.upload'))
-        
-    lines1, lines2 = parse_diff_result(record.result1), parse_diff_result(record.result2)
+
+    blocks1, blocks2 = parse_diff_blocks(record.blocks1), parse_diff_blocks(record.blocks2)
+
+    data1, data2 = [], []
+    for data, _blocks in [(data1, json.loads(record.blocks1)),
+                          (data2, json.loads(record.blocks2))]:
+        for b in _blocks:
+            for line in b:
+                data.append(str(line))
+            data.append('-'*100)
+    
     return render_template('main.html',
                            record=record,
-                           lines1=lines1, lines2=lines2)
+                           blocks1=blocks1,
+                           blocks2=blocks2,
+                           data1='\n'.join(data1),
+                           data2='\n'.join(data2))
 
     
 @app.route('/upload', methods=['GET', 'POST'])
