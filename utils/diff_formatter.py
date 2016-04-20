@@ -32,6 +32,7 @@ def get_aligned_blocks(t_diff_lines):
     ''' 返回对齐的比较块 '''
     
     rexp = r'@@ -(\w+),(\w+) \+(\w+),(\w+) @@'
+    rexp_2 = r'@@ -(\w+) \+(\w+) @@'
     header = None
     lst1 = []
     lst2 = []
@@ -46,9 +47,16 @@ def get_aligned_blocks(t_diff_lines):
                 lst1 = []
                 lst2 = []
             header = line       # update header
-            t_nums = re.match(rexp, header).groups()
-            ln1 = int(t_nums[0])
-            ln2 = int(t_nums[2])
+            match = re.match(rexp, header)
+            if match:
+                t_nums = match.groups()
+                ln1 = int(t_nums[0])
+                ln2 = int(t_nums[2])
+            else:
+                match = re.match(rexp_2, header)
+		t_nums = match.groups()
+                ln1 = int(t_nums[0])
+                ln2 = int(t_nums[1])
             
             fill_blank(delta_ln1, delta_ln2, lst1, lst2)
             delta_ln1 = delta_ln2 = 0
